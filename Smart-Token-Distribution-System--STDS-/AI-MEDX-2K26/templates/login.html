@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Login – AI-MEDX 2K26</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+
+    <main class="center-wrapper">
+        <div class="glass-card login-card">
+            <div class="card-header">
+                <h1>AI-MEDX 2K26</h1>
+                <p class="subtitle">E-Food Token Pass</p>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="/" class="login-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="dept">Department</label>
+                    <input type="text" id="dept" name="dept" placeholder="e.g. AI&DS" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Get My Token →
+                </button>
+            </form>
+
+            <div style="margin-top: 1rem; text-align: center;">
+                <a href="/admin/login" class="btn btn-secondary"
+                    style="width: 100%; display: block; text-align: center;">
+                    🔐 Admin Login
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        Developed by 2nd Year AI&amp;DS Students
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

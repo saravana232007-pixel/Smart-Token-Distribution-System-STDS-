@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login – AI-MEDX 2K26</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+
+    <main class="center-wrapper">
+        <div class="glass-card login-card">
+            <div class="card-header">
+                <h1>Admin Panel</h1>
+                <p class="subtitle">AI-MEDX 2K26</p>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="/admin/login" class="login-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Admin username" required
+                        autocomplete="off" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Admin password" required
+                        autocomplete="off" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login →</button>
+            </form>
+
+            <div class="back-link">
+                <a href="/">← Back to Student Login</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        Developed by 2nd Year AI&amp;DS Students
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

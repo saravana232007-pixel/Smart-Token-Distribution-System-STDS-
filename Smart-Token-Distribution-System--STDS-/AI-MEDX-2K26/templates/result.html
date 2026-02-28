@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Result – AI-MEDX 2K26</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+
+    <main class="center-wrapper">
+        {% if found %}
+        <div class="glass-card result-card success-card">
+            <h2 class="result-title">Token Retrieved!</h2>
+
+            <div class="student-info">
+                <div class="info-row">
+                    <span class="info-label">Name</span>
+                    <span class="info-value">{{ student.name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Department</span>
+                    <span class="info-value">{{ student.dept }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value">{{ student.phone }}</span>
+                </div>
+            </div>
+
+            <div class="token-display">
+                <p class="token-label">Your Food Token</p>
+                <div class="token-number" id="tokenNumber">{{ student.token }}</div>
+            </div>
+
+            <p class="enjoy-msg">Enjoy your food!</p>
+
+            <a href="/" class="btn btn-primary">← Back to Login</a>
+        </div>
+
+        {% else %}
+        <div class="glass-card result-card error-card">
+            <h2 class="result-title">Not Found</h2>
+            <p class="error-msg">{{ message }}</p>
+            <a href="/" class="btn btn-secondary">← Try Again</a>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer class="site-footer">
+        Developed by 2nd Year AI&amp;DS Students
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

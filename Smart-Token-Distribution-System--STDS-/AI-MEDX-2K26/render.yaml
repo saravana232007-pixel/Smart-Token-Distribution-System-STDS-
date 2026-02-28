@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: ai-medx-2k26
+    env: python
+    region: singapore # Adjust if needed
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.0 # Matching runtime.txt
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-medx-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false # Set manually in dashboard
+      - key: ADMIN_PASSWORD
+        sync: false # Set manually in dashboard
+
+databases:
+  - name: ai-medx-db
+    databaseName: ai_medx
+    user: ai_medx_user
+    plan: free # Can upgrade later
+    region: singapore

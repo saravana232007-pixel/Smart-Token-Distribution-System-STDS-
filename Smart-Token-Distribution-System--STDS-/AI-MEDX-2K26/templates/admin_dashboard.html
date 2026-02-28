@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard – AI-MEDX 2K26</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body class="admin-body">
+    <div class="bg-gradient"></div>
+
+    <!-- Nav -->
+    <nav class="admin-nav glass-nav">
+        <div class="nav-brand">
+            AI-MEDX 2K26 &nbsp;|&nbsp; Admin Dashboard
+        </div>
+        <div class="nav-actions">
+            <span class="badge">Total: {{ total }}</span>
+            <a href="/" class="btn btn-sm btn-outline">Student View</a>
+            <a href="/admin/logout" class="btn btn-sm btn-danger">Logout</a>
+        </div>
+    </nav>
+
+    <div class="admin-wrapper">
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- Bulk Upload CSV -->
+        <section class="glass-card admin-section">
+            <h2 class="section-title">Bulk Upload Students (CSV)</h2>
+            <form method="POST" action="/admin/upload_csv" enctype="multipart/form-data" class="search-form">
+                <input type="file" name="csv_file" accept=".csv" class="search-input" required />
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </section>
+
+        <!-- Search -->
+        <section class="glass-card admin-section">
+            <h2 class="section-title">Search Students</h2>
+            <form method="GET" action="/admin" class="search-form">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search by name or phone…"
+                    class="search-input" />
+                <button type="submit" class="btn btn-primary">Search</button>
+                {% if query %}
+                <a href="/admin" class="btn btn-outline">Clear</a>
+                {% endif %}
+            </form>
+        </section>
+
+        <!-- Add Student -->
+        <section class="glass-card admin-section">
+            <h2 class="section-title">Add New Student</h2>
+            <form method="POST" action="/admin/add" class="add-form" autocomplete="off">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name" placeholder="Student name" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input type="text" name="dept" placeholder="e.g. AI&DS" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" placeholder="Phone number" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Token (6 digits)</label>
+                        <input type="text" name="token" placeholder="e.g. 123456" maxlength="6" pattern="\d{6}"
+                            required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Add Student</button>
+            </form>
+        </section>
+
+        <!-- Student Table -->
+        <section class="glass-card admin-section">
+            <h2 class="section-title">
+                All Students
+                {% if query %}
+                <span class="search-tag">Results for "{{ query }}"</span>
+                {% endif %}
+            </h2>
+
+            {% if students %}
+            <div class="table-wrapper">
+                <table class="student-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Phone</th>
+                            <th>Token</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr>
+                            <td data-label="#">{{ s.id }}</td>
+                            <td data-label="Name">{{ s.name }}</td>
+                            <td data-label="Dept">{{ s.dept }}</td>
+                            <td data-label="Phone">{{ s.phone }}</td>
+                            <td data-label="Token"><span class="token-badge">{{ s.token }}</span></td>
+                            <td data-label="Actions" class="action-cell">
+                                <a href="/admin/edit/{{ s.id }}" class="btn btn-sm btn-outline">Edit</a>
+                                <form method="POST" action="/admin/delete/{{ s.id }}" style="display:inline"
+                                    onsubmit="return confirm('Delete {{ s.name }}?')">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="empty-msg">No students found.</p>
+            {% endif %}
+        </section>
+
+    </div><!-- /admin-wrapper -->
+
+    <footer class="site-footer">
+        Developed by 2nd Year AI&amp;DS Students
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
